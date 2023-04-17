@@ -1,96 +1,77 @@
-class ProductManager {
-  constructor() {
-    // Inicializa el arreglo de productos vacío y el siguiente ID en 1
-    this.products = [];
-    this.nextId = 1;
-  }
+//Importamos el modulo fs para manejar archivos.
+import { promises as fs } from 'fs'
 
-  addProduct(title, description, price, thumbnail, code, stock) {
-    // Verifica si algún campo obligatorio está faltando y si el código ya existe
-    if (!title || !description || !price || !thumbnail || !code || !stock) {
-      console.log("Todos los campos son obligatorios.");
-      return;
+export class ProductManager {
+    constructor(path) {
+        this.path = path
     }
-    if (this.products.some(product => product.code === code)) {
-      console.log("Ya existe un producto con este código.");
-      return;
-    }
-    // Crea un nuevo producto con el siguiente ID autoincrementable
-    const product = {
-      id: this.nextId,
-      title,
-      description,
-      price,
-      thumbnail,
-      code,
-      stock,
-    };
-    // Incrementa el siguiente ID y agrega el nuevo producto al arreglo de productos
-    this.nextId++;
-    this.products.push(product);
-  }
 
-  getProductById(id) {
-    // Busca el producto correspondiente al ID proporcionado y devuelve el producto o muestra un mensaje de error
-    const product = this.products.find(product => product.id === id);
-    if (!product) {
-      console.log("Producto no encontrado.");
-      return;
+    static incrementarID() {
+        if (this.idIncrement) {
+            this.idIncrement++
+        } else {
+            this.idIncrement = 1
+        }
+        return this.idIncrement
     }
-    return product;
-  }
 
-  getProducts() {
-    // Devuelve el arreglo completo de productos
-    return this.products;
-  }
+    async addProduct(producto) {
+        const prodsJSON = await fs.readFile(this.path, 'utf-8')
+        const prods = JSON.parse(prodsJSON)
+        producto.id = ProductManager.incrementarID()
+        prods.push(producto)
+        await fs.writeFile(this.path, JSON.stringify(prods))
+        return "Producto creado"
+    }
+    //Definimos un metodo para obtener todos los productos
+    async getProducts() {
+        const prods = await fs.readFile(this.path, 'utf-8')
+        return JSON.parse(prods)
+    }
+    //Definimos un metodo para obtener un producto por su ID
+    async getProductById(id) {
+        const prodsJSON = await fs.readFile(this.path, 'utf-8')
+        const prods = JSON.parse(prodsJSON)
+        if (prods.some(prod => prod.id === parseInt(id))) {
+            return prods.find(prod => prod.id === parseInt(id))
+        } else {
+            return "Producto no encontrado"
+        }
+    }
+    //definimos un metodo para actualizar un producto por su ID
+    async updateProduct(id, { title, description, price, thumbnail, code, stock }) {
+        const prodsJSON = await fs.readFile(this.path, 'utf-8')
+        const prods = JSON.parse(prodsJSON)
+        if (prods.some(prod => prod.id === parseInt(id))) {
+            let index = prods.findIndex(prod => prod.id === parseInt(id))
+            prods[index].title = title
+            prods[index].description = description
+            prods[index].price = price
+            prods[index].thumbnail = thumbnail
+            prods[index].code = code
+            prods[index].stock = stock
+            await fs.writeFile(this.path, JSON.stringify(prods))
+            return "Producto actualizado"
+        } else {
+            return "Producto no encontrado"
+        }
+    }
+    //
+    //Definimos un producto para borrar segun el ID
+    async deleteProduct(id) {
+        const prodsJSON = await fs.readFile(this.path, 'utf-8')
+        const prods = JSON.parse(prodsJSON)
+        if (prods.some(prod => prod.id === parseInt(id))) {
+            const prodsFiltrados = prods.filter(prod => prod.id !== parseInt(id))
+            await fs.writeFile(this.path, JSON.stringify(prodsFiltrados))
+            return "Producto eliminado"
+        } else {
+            return "Producto no encontrado"
+        }
+    }
+
 }
 
-// Crea una nueva instancia de la clase ProductManager
-const productManager = new ProductManager();
+const prod = new ProductManager('./info.txt')
 
-// Agrega un nuevo producto llamando al método addProduct con los valores requeridos
-productManager.addProduct(
-  "Rtx 3070",
-  "Placa de video Rtx 3070 msi",
-  400.000,
-  "img",
-  "PV3070MSI",
-  10
-);
-
-productManager.addProduct(
-  "i7 13600k",
-  "Procesador intel i7 13va generación",
-  180.000,
-  "img",
-  "PI713600K",
-  5
-);
-
-productManager.addProduct(
-  "Fuente 850w 80+ Gold",
-  "Fuente de alimentacion thermaltake",
-  40.000,
-  "img",
-  "FP850W",
-  2
-);
-
-productManager.addProduct(
-  "Placa madre b560m",
-  "Placa madre ASUS B560M",
-  35.000,
-  "img",
-  "PMB560M",
-  4
-);
-
-productManager.addProduct(
-  "Memoria Ram 8GB",
-  "Memoria Ram Hyperx",
-  15.000,
-  "img",
-  "MR8GBH",
-  2
-);
+prod.getProducts().then(prod => console.log(prod));
