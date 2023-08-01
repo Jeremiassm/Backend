@@ -1,6 +1,6 @@
 import {promises as fs} from "fs"
 
-class ProductManager {
+export default class ProductManager {
     constructor(){
         this.path = "./productos.txt"
         this.products = []
@@ -50,7 +50,6 @@ class ProductManager {
         let respuesta3 = await this.readProducts()
         let productFilter = respuesta3.filter(products => products.id != id)
         await fs.writeFile(this.path, JSON.stringify(productFilter));
-        console.log("Producto eliminado")
     };
 
 
@@ -64,10 +63,17 @@ class ProductManager {
 }
 
 
-const productos = new ProductManager
+//const productos = new ProductManager();
 
-//productos.addProduct("Titulo1", "Description1", 1999, "Thumbnail1", "code", "stock")
-//productos.addProduct("Titulo2", "Description2", 1992, "Thumbnail2", "code2", "stock2")
+/* productos.addProduct("Titulo1", "Description1", 1999, "Thumbnail1", "code", "stock")
+productos.addProduct("Titulo2", "Description2", 1992, "Thumbnail2", "code2", "stock2")
+productos.addProduct("Titulo3", "Description3", 3000, "Thumbnail3", "code3", "stock3")
+productos.addProduct("Titulo4", "Description4", 4992, "Thumbnail4", "code4", "stock4")
+productos.addProduct("Titulo5", "Description5", 3992, "Thumbnail5", "code5", "stock5")
+productos.addProduct("Titulo6", "Description6", 1992, "Thumbnail6", "code6", "stock6")
+productos.addProduct("Titulo7", "Description7", 5992, "Thumbnail7", "code7", "stock7")
+productos.addProduct("Titulo8", "Description8", 6992, "Thumbnail8", "code8", "stock8")
+productos.addProduct("Titulo9", "Description9", 8992, "Thumbnail9", "code9", "stock9") */
 
 //productos.getProducts()
 
@@ -76,10 +82,10 @@ const productos = new ProductManager
 //productos.deleteProductById(2)
 
 
-productos.updateProducts({ title: 'Titulo2',
+/* productos.updateProducts({ title: 'Titulo2',
 description: 'Description2',
 price: 4500,
 thumbnail: 'Thumbnail2',
 code: 'code2',
 stock: 'stock2',
-id: 2})
+id: 2}) */
