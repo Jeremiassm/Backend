@@ -1,22 +1,56 @@
 [
 	{
-		"title": "Azucar",
-		"description": "Endulzante",
-		"code": "Ab123",
-		"price": 100,
+		"title": "Hamburguesa",
+		"description": "Comida",
+		"code": "Ab122",
+		"price": "2500",
 		"status": true,
-		"stock": 50,
-		"category": "Comestibles",
+		"stock": "5",
+		"category": "Hamburguesas",
 		"thumbnails": []
 	},
 	{
-		"title": "Edulcorante",
-		"description": "Endulzante",
-		"code": "Ab124",
-		"price": 100,
+		"title": "Hamburguesa",
+		"description": "Comida",
+		"code": "Ab122",
+		"price": "2500",
 		"status": true,
-		"stock": 50,
-		"category": "Comestibles",
+		"stock": "5",
+		"category": "Hamburguesas",
 		"thumbnails": []
+	},
+	{
+		"title": "Hamburguesa",
+		"description": "Comida",
+		"code": "Ab122",
+		"price": "2500",
+		"status": true,
+		"stock": "5",
+		"category": "Hamburguesas",
+		"thumbnails": "burguesa.jpg"
+	},
+	{
+		"title": "Hamburguesa",
+		"description": "Comida",
+		"code": "Ab122",
+		"price": "2500",
+		"status": true,
+		"stock": "5",
+		"category": "Hamburguesas",
+		"thumbnails": [
+			"Burguesa.jpg"
+		]
+	},
+	{
+		"title": "Hamburguesa",
+		"description": "Comida",
+		"code": "Ab122",
+		"price": "2500",
+		"status": true,
+		"stock": "5",
+		"category": "Hamburguesas",
+		"thumbnails": [
+			"Burguesa.jpg"
+		]
 	}
 ]

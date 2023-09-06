@@ -1,0 +1,12 @@
+*{
+    background-color: black ;
+    color: white;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}

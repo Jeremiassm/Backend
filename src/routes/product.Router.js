@@ -1,18 +1,29 @@
 import { Router } from 'express';
 import { productFSService} from '../services/productFSService.js'
-
+import { productDBService } from '../services/productDBService.js';
+import { uploader } from '../utils/multerUtil.js';
 
 const router = Router()
-const productService = new productFSService('Products.json');
+//const ProductService = new productFSService('Products.json');
+const ProductService = new productDBService();
+
 
 router.get('/', (req, res) => {
-    const products = productService.getAllProducts();
+    const products = ProductService.getAllProducts();
 
     res.send(products);
     });
 
-router.post('/', (req, res) =>{
-    const result  = productService.createProduct(req.body);
+router.post('/', uploader.array('thumbnails', 3), (req, res) =>{
+
+    if (req.files){
+        req.body.thumbnails = []
+        req.files.forEach((file) =>{
+            req.body.thumbnails.push(file.filename)
+        })
+    }
+
+    const result = ProductService.createProduct(req.body);
 
     res.send({
         message: result
