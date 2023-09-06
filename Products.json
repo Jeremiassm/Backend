@@ -1,0 +1,22 @@
+[
+	{
+		"title": "Azucar",
+		"description": "Endulzante",
+		"code": "Ab123",
+		"price": 100,
+		"status": true,
+		"stock": 50,
+		"category": "Comestibles",
+		"thumbnails": []
+	},
+	{
+		"title": "Edulcorante",
+		"description": "Endulzante",
+		"code": "Ab124",
+		"price": 100,
+		"status": true,
+		"stock": 50,
+		"category": "Comestibles",
+		"thumbnails": []
+	}
+]
