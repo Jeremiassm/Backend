@@ -8,13 +8,13 @@ const router = Router()
 const ProductService = new productDBService();
 
 
-router.get('/', (req, res) => {
-    const products = ProductService.getAllProducts();
+router.get('/', async (req, res) => {
+    const products = await ProductService.getAllProducts();
 
     res.send(products);
     });
 
-router.post('/', uploader.array('thumbnails', 3), (req, res) =>{
+router.post('/', uploader.array('thumbnails', 3), async (req, res) =>{
 
     if (req.files){
         req.body.thumbnails = []
@@ -23,7 +23,7 @@ router.post('/', uploader.array('thumbnails', 3), (req, res) =>{
         })
     }
 
-    const result = ProductService.createProduct(req.body);
+    const result = await ProductService.createProduct(req.body);
 
     res.send({
         message: result

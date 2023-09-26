@@ -4,12 +4,16 @@ import productRouter from './routes/product.Router.js';
 import viewsRouter from './routes/viewsRouter.js'
 import __dirname from "./utils/constantsUtil.js";
 import mongoose from "mongoose";
+import cookieParser from 'cookie-parser';
 
 const uri = 'mongodb://127.0.0.1:27017/integrations';
 mongoose.connect(uri)
 
 
 const app = express();
+
+
+
 
 //Handlebars Config
 app.engine('handlebars', handlebars.engine());
@@ -22,10 +26,13 @@ app.set('view engine', 'handlebars')
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'));
+app.use(cookieParser('CoderPass2023'));
+app.use('/cookies', cookiesRouter);
 
 //Routers
 app.use("/api/product", productRouter)
 app.use("/products", viewsRouter)
+
 
 const PORT = 8080;
 app.listen(PORT, () =>{
